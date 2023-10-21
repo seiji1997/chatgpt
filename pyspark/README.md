@@ -323,4 +323,100 @@ We set up the GlueContext and Spark session.<br>
 > We apply One-Hot Encoding using the OneHotEncoderTransform from AWS Glue's transforms module.<br>
 > We merge the encoded columns back into the original DataFrame using a join operation.<br>
 > Finally, we convert the DynamicFrame to a DataFrame and write it to a destination (e.g., another Amazon S3 location).<br>
-> Make sure to replace "your-database" and "your-table" with your actual database and table names. This code demonstrates the basic process of performing One-Hot Encoding in an AWS Glue ETL job.<br>
+> Make sure to replace "your-database" and "your-table" with your actual database and table names. This code demonstrates the basic process of performing One-Hot Encoding in an AWS Glue ETL job.<be>
+
+
+---------------------------
+## Lambda (Python) to copy .csv files in Google Drive to S3 in AWS
+
+
+> ## Processing details<br>
+> 1, Retrieve the specified .csv under the specified Google Drive folder<br>
+> 2, Wait 30 seconds after failed fetch and retry<br>
+> 3, Store in the specified S3<br>
+> 4, Trigger the crawler to run when the file is stored in S3.<be>
+
+
+Creating an AWS Lambda function in Python to copy .csv files from Google Drive to an S3 bucket and triggering a crawler when the file is stored in S3 involves several steps. This process requires interacting with Google Drive, waiting for retries, copying files to S3, and triggering the AWS Glue crawler. Below is a Python code outline to achieve this:
+
+```python
+import os
+import time
+import tempfile
+from google.oauth2 import service_account
+from googleapiclient.discovery import build
+import boto3
+
+def lambda_handler(event, context):
+    # Set your Google Drive credentials
+    gdrive_credentials = {
+        "client_id": "YOUR_CLIENT_ID",
+        "client_secret": "YOUR_CLIENT_SECRET",
+        "refresh_token": "YOUR_REFRESH_TOKEN"
+    }
+
+    # Set your S3 bucket and key prefix
+    s3_bucket = "your-s3-bucket"
+    s3_prefix = "google-drive-csv-files/"
+
+    # Authenticate with Google Drive
+    credentials = service_account.Credentials.from_service_account_info(gdrive_credentials, ['https://www.googleapis.com/auth/drive.file'])
+    drive_service = build('drive', 'v3', credentials=credentials)
+
+    # Set the Google Drive folder ID from which you want to retrieve .csv files
+    folder_id = "your-folder-id"
+
+    # Define the retry count and interval
+    max_retries = 3
+    retry_interval = 30  # 30 seconds
+
+    for retry in range(max_retries):
+        try:
+            # List .csv files in the specified Google Drive folder
+            results = drive_service.files().list(q=f"'{folder_id}' in parents and mimeType='text/csv'").execute()
+            files = results.get('files', [])
+
+            # Create a temporary directory to store downloaded files
+            tmp_dir = tempfile.mkdtemp()
+
+            # Initialize S3 client
+            s3_client = boto3.client('s3')
+
+            for file in files:
+                file_name = file['name']
+                file_id = file['id']
+
+                # Download the file from Google Drive
+                request = drive_service.files().get_media(fileId=file_id)
+                file_data = request.execute()
+
+                # Write the file to the temporary directory
+                with open(os.path.join(tmp_dir, file_name), 'wb') as f:
+                    f.write(file_data)
+
+                # Upload the file to S3
+                s3_key = s3_prefix + file_name
+                s3_client.upload_file(os.path.join(tmp_dir, file_name), s3_bucket, s3_key)
+
+            # Trigger the AWS Glue crawler when the file is stored in S3
+            # Add code here to trigger the crawler (e.g., using AWS SDK or Lambda invocation)
+
+            return {
+                'statusCode': 200,
+                'body': 'Files copied to S3 and crawler triggered'
+            }
+
+        except Exception as e:
+            if retry < max_retries - 1:
+                # Retry after the specified interval
+                time.sleep(retry_interval)
+                continue
+            else:
+                raise e
+
+```
+
+
+This Lambda function first authenticates with Google Drive, lists .csv files in the specified folder, downloads and uploads the files to S3, and then triggers the AWS Glue crawler. If any step fails, it retries after a 30-second interval for a maximum of 3 retries. Make sure to replace "YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET", "YOUR_REFRESH_TOKEN", "your-s3-bucket", "google-drive-csv-files/", and "your-folder-id" with your actual credentials and folder details.
+
+To trigger the AWS Glue crawler, you can use the AWS SDK or invoke another Lambda function that triggers the crawler. The specifics of triggering the crawler may depend on your AWS Glue setup.
