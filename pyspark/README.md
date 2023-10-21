@@ -113,7 +113,8 @@ titanic_data_merged.write.option("header", "true").csv(output_path + "/processed
 job.commit()
 ```
 
-This script assumes you have already done the One-Hot-Encoding for categorical columns, which is typically a custom transformation. Please replace 'input_path' and 'output_path' with your actual S3 paths and customize the One-Hot-Encoding part as needed.
+This script assumes you have already done the One-Hot-Encoding for categorical columns, which is typically a custom transformation. Please replace 'input_path' and 'output_path' with your actual S3 paths and customize the One-Hot-Encoding part as needed.<br>
+one-hot-encoding-should-be-as-follows -> https://github.com/seiji1997/chatgpt/blob/master/pyspark/README.md#one-hot-encoding-should-be-as-follows
 
 ## AWS Glue (PySpark) - Lambda Function
 You can create a Lambda function to migrate the preprocessed data from the second S3 to GCP's Cloud Storage. The completion of the AWS Glue Crawler can trigger this function.
