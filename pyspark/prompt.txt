@@ -1,0 +1,60 @@
+Please create python code to implement the following process on AWS Glue (pyspark) and in Google Colab.
+
+# Process
+## Processing on Google Colab side
+1, Acquire Titanic data from seaborn and store it in a data frame.
+2, Store the data in titanic.csv format in Goolge Drive in the same hierarchy.
+3, Store the stored .csv in the first S3.
+
+## Processing on AWS Glue (pyspark) side
+1, Read titanic.csv stored in the first S3
+2, Store in a data frame 
+3, Fill in the missing values with the median value of each column using SQL
+4, Separate numeric columns (X_num) and character columns (X_cat) for separate processing in SQL
+5, Convert all character columns (X_cat) to numeric with One-Hot-Encoding
+6, Merge X_num and X_cat now that they are all numeric data
+7, Store the data processed in 3~6 in the second S3
+8, Execute the crawler
+9, Create a Lambda (python) that migrates the preprocessed data (second S3) to GCP's Cloud Storage (set it to be triggered by the completion of the crawler)
+
+## Processing on GCP (BigQuery) side
+1, Create a job in Cloud Functions (python) to migrate data coming into Cloud Storage to BigQuery.
+2, Extract train data with BigQuery
+3, Create logistic regression model with BigQueryML
+4, Evaluate performance using ROC curve and AUC in BigQueryML
+5, Evaluate mixed matrices with BigQueryML
+
+#Note
+The names of S3 and crawler are yet to be determined, so please make it clear so that it can be changed accordingly.
+
+--------------------------
+
+
+以下の処理をAWSのGlue（pyspark）上とGoogle Colabで実装するpythonコードを作成してください。
+
+# 処理
+## Google Colab側の処理
+1, タイタニックデータをseabornから取得し、データフレームに格納。
+2, 同一階層内のGoolge Driveにtitanic.csv形式で格納する。
+3, 格納された.csvを1つ目のS3に格納する。
+
+## AWS Glue(pyspark)側の処理
+1, 1つ目のS3格納されたtitanic.csvを読み取る
+2, データフレームに格納する 
+3, 欠損値を各列の中央値で埋める処理をSQLで行う
+4, 数値カラム(X_num)と文字カラム(X_cat)を別々に処理するために分離する処理をSQLで行う
+5, One-Hot-Encodingで文字カラム(X_cat)を全て数値に変換
+6, X_num, X_catが全て数値データになったので結合する
+7, 3~6で処理されたデータを2つ目のS3に格納する
+8, クローラーを実行する
+9, 前処理が完了したデータ（2つ目のS3）をGCPのCloud Storageに移行するLambda（python）を作成する（クローラーが完了したことをトリガに起動するように設定）
+
+## GCP(BigQuery)側の処理
+1, Cloud Storageに入ってきたデータをBigQueryに移行するJobをCloud Functions（python）で作成
+2, BigQueryでtrain data の抽出
+3, BigQueryMLでロジスティック回帰モデルの作成
+4, BigQueryMLでROC曲線ととAUCを用いて性能評価
+5, BigQueryMLで混合行列での評価
+
+#注意
+S3やクローラーの名称は未定なので、適宜変更できるようにわかりやすくしてください。
