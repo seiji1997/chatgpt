@@ -1,5 +1,5 @@
 # chatgpt
-playing with ChatGPT
+It's not so bad.
 
 ## prompt
 ```
