@@ -242,10 +242,10 @@ glueContext.write_dynamic_frame.from_catalog(frame = DynamicFrame.fromDF(final_d
 
 In this code:
 
-We set up the GlueContext and Spark session.<be>
-> We read the data from a source (you need to specify your own database and table).
-> We specify the character columns (X_cat) that you want to encode.
-> We apply One-Hot Encoding using the OneHotEncoderTransform from AWS Glue's transforms module.
-> We merge the encoded columns back into the original DataFrame using a join operation.
-> Finally, we convert the DynamicFrame to a DataFrame and write it to a destination (e.g., another Amazon S3 location).
-> Make sure to replace "your-database" and "your-table" with your actual database and table names. This code demonstrates the basic process of performing One-Hot Encoding in an AWS Glue ETL job.
+We set up the GlueContext and Spark session.<br>
+> We read the data from a source (you need to specify your own database and table).<br>
+> We specify the character columns (X_cat) that you want to encode.<br>
+> We apply One-Hot Encoding using the OneHotEncoderTransform from AWS Glue's transforms module.<br>
+> We merge the encoded columns back into the original DataFrame using a join operation.<br>
+> Finally, we convert the DynamicFrame to a DataFrame and write it to a destination (e.g., another Amazon S3 location).<br>
+> Make sure to replace "your-database" and "your-table" with your actual database and table names. This code demonstrates the basic process of performing One-Hot Encoding in an AWS Glue ETL job.<br>
