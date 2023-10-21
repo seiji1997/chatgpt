@@ -53,8 +53,8 @@ titanic.to_csv('/content/drive/My Drive/titanic.csv', index=False)
 After running the code in Google Colab, you should have the Titanic dataset stored as 'titanic.csv' in your Google Drive.
 
 ## AWS Glue (PySpark)
-You can create an AWS Glue Job to perform the first part of data processing. Below is a sample Python script for AWS Glue:
-
+You can create an AWS Glue Job to perform the first part of data processing. Below is a sample Python script for AWS Glue:<br>
+lambda-python-to-copy-csv-files-in-google-drive-to-s3-in-aws　-> https://github.com/seiji1997/chatgpt/blob/master/pyspark/README.md#lambda-python-to-copy-csv-files-in-google-drive-to-s3-in-aws
 
 ```python
 import sys
