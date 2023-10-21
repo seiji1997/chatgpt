@@ -178,12 +178,86 @@ def migrate_to_bigquery(data, context):
 
 ```
 
-This Cloud Function loads data into a BigQuery table when triggered by a new file in Cloud Storage.
+This Cloud Function loads data into a BigQuery table when triggered by a new file in Cloud Storage.<br>
 
-The data analysis part in BigQueryML (steps 2, 3, 4, and 5) can be implemented using SQL queries and BigQueryML functions within the BigQuery environment.
+The data analysis part in BigQueryML (steps 2, 3, 4, and 5) can be implemented using SQL queries and BigQueryML functions within the BigQuery environment.<br>
 
-Remember to configure Cloud Function triggers and permissions appropriately for both AWS Lambda and GCP Cloud Functions, and replace 'your-gcp-bucket,' 'your_dataset_id,' and 'titanic_data' with your actual GCP project, dataset, and table details.
+Remember to configure Cloud Function triggers and permissions appropriately for both AWS Lambda and GCP Cloud Functions, and replace 'your-gcp-bucket,' 'your_dataset_id,' and 'titanic_data' with your actual GCP project, dataset, and table details.<br>
 
+
+To create a logistic regression model with BigQueryML, evaluate its performance using the ROC curve and AUC (Area Under the Curve), and calculate confusion matrices, you can follow these steps. BigQueryML allows you to perform machine learning tasks using SQL-like queries:<be>
+
+### Create Logistic Regression Model:
+Use BigQuery SQL to create a logistic regression model. In this example, we'll assume you have a dataset called your_dataset and a target column named target, and you want to predict binary outcomes.
+
+```sql
+CREATE OR REPLACE MODEL your_project.your_dataset.logistic_model
+OPTIONS(model_type='logistic_reg') AS
+SELECT
+  input_feature_1,
+  input_feature_2,
+  ...
+  target AS label
+FROM
+  `your_project.your_dataset.your_table`
+
+```
+
+Replace your_project, your_dataset, your_table, and input_feature_1, input_feature_2, etc., with your project, dataset, table, and feature names.
+
+### Evaluate Model and Calculate ROC and AUC:
+Use the following SQL to evaluate your logistic regression model and calculate the ROC curve and AUC.<be>
+
+```sql
+-- Evaluate the model
+SELECT
+  roc.threshold AS threshold,
+  roc.fpr AS false_positive_rate,
+  roc.tpr AS true_positive_rate,
+  roc.roc_auc AS auc
+FROM
+  ML.ROC_CURVE(MODEL your_project.your_dataset.logistic_model) AS roc
+```
+
+This query calculates the ROC curve and AUC. You'll get a table with threshold values, false positive rates (fpr), true positive rates (tpr), and the AUC score.
+
+### Evaluate Confusion Matrices:
+To calculate confusion matrices, you can use SQL queries as well. For instance:
+
+```sql
+
+-- Confusion matrix for a specified threshold
+SELECT
+  CASE
+    WHEN predicted_prob > 0.5 THEN 1
+    ELSE 0
+  END AS predicted_label,
+  actual_label,
+  COUNT(*) AS count
+FROM (
+  SELECT
+    predicted_prob,
+    actual_label
+  FROM
+    ML.PREDICT(MODEL your_project.your_dataset.logistic_model,
+    (
+      SELECT
+        input_feature_1,
+        input_feature_2,
+        ...
+      FROM
+        `your_project.your_dataset.your_table`
+    )
+    ) AS result
+)
+GROUP BY
+  predicted_label, actual_label
+
+```
+
+This query calculates the confusion matrix. Adjust the threshold (e.g., 0.5) to control the classification threshold as needed.<br>
+
+These SQL queries will allow you to create a logistic regression model, evaluate its performance, and calculate ROC curves, AUC, and confusion matrices within BigQueryML. Make sure to adapt the SQL queries to your specific dataset and requirements.<br>
 
 
 ---------------------------
