@@ -1,0 +1,67 @@
+Create sales POS data for a hypothetical retail store, taking into account the following conditions. However, please make sure that the code is not too long.
+
+Basic Information
+Shinjuku, Machida, and Yokohama stores.
+Business hours are usually from 7:00 to 20:00 for the regular stores.
+Average number of visitors per day is 100 at Shinjuku store, 30 at Machida store, and 60 at Yokohama store.
+Average number of items purchased per customer: 1.2 in the morning, 2.5 in the afternoon, and 2.8 in the evening
+Five items: tuna mayo (200 yen), kelp (180 yen), salmon roe (420 yen), chashu (300 yen), and takana (250 yen)
+A single customer purchases a total of one to three different items in different combinations. Rarely, some customers purchase more than one of the same item.
+output information
+The period is one week from Monday, July 24, 2023 to Sunday, July 30, 2023
+Data items should be "transaction ID, transaction ID, date/time, day of week, store, gender, age group, items purchased, unit price, quantity, subtotal, and payment method.
+Age groups should be categorized as "children (1-18 years old)," "youth (18-35 years old)," "middle-aged (36-55 years old)," and "elderly (56 years old and older).
+Payment methods should be "Cash", "Credit" or "Debit".
+Use English for the days of the week.
+Please output the created data in downloadable Excel format.
+Assign one transaction ID per customer to group purchases by the same customer. If a customer visits the store more than once, assign a new transaction ID.
+Store Characteristics Information
+Shinjuku store is an urban core store, Machida store is a large suburban store, and Yokohama store is a department store tenant
+Business hours are 7:00 - 20:00 for regular stores; 10:00 - 21:00 for department store tenants
+Peak demand is highest for lunch at noon, but demand for breakfast is also high for the urban center type stores, and demand for dinner is high for the suburban stores
+Urban stores have high sales on weekdays. Urban stores have high weekday sales, and are closed on weekends. Customers are mainly businessmen. Most customers are businessmen, with many men in the morning and young women in the afternoon.
+Suburban stores are closed on Thursdays. Weekend sales are high, with a trend toward bulk purchases of multiple items for families.
+Department store tenants are not closed. Department store tenants are not closed. Sales are higher on Fridays through Saturdays, and the customer base is older.
+Item characteristics information
+Tuna Mayo" is popular among all customers, "Kelp" and "Takana" are popular among older customers, "Salmon roe" is popular among women, and "Chashu" is popular among men in their 20s to 40s
+Special Information
+
+One hour before closing, a sale is held in order not to leave any items unsold. All items can be purchased with a 100 yen discount. This is why the number of customers increases only during this time.
+There is a kindergarten nearby the Machida store, and every Wednesday, the number of customers doubles between 11:00 and 12:00 due to kindergarten students returning home from pick-up.
+This data is POS data for three stores selling rice balls. Create a Python script in scikit-learn to analyze the trend in the number of visitors per hour for the Machida store using linear regression analysis
+
+次条件を考慮して、仮想的な小売店舗の売り上げPOSデータを作成してください。ただし、コードが長くなりすぎないように工夫してください。
+
+＃＃＃基本情報
+
+新宿店、町田店、横浜店の3店舗
+営業時間は通常店舗は7:00～20:00。
+1日の平均来客数は新宿店100人、町田店は30人、横浜店は60人
+1人あたりの購入アイテム数の平均は、朝は1.2個、昼は2.5個、夕は2.8個
+アイテムは「ツナマヨ（200円）」「こんぶ（180円）」「いくら（420円）」「チャーシュー（300円）」「高菜（250円）」の5種類
+一人の客は異なるアイテムを組み合わせて合計で1～3個を購入する。稀に同じアイテムを複数購入する人もいる。
+＃＃＃出力情報
+
+期間は2023年7月24日（月曜日）から7月30日（日曜日）までの1週間
+データの項目は「トランザクションID、取引ID、日時、曜日、店舗、性別、年齢層、購入アイテム、単価、個数、小計、支払方法」としてください。
+年齢層は「子供（1-18歳）」、「若者（18-35歳）」、「中高年（36-55歳）」、「高齢者（56歳以上）」に分類してください。
+支払方法は「現金」、「クレジット」、「デビット」のいずれかにします。
+曜日は英語を使ってください
+作成したデータはExcel形式でダウンロード可能な状態で出力してください。
+同じ顧客による購入をグループ化するために1人の顧客につき1つの取引IDを割り当てます。顧客が複数回来店する場合は、新たな取引IDを割り当ててください。
+＃＃＃店舗特性情報
+
+新宿店は都心型基幹店舗、町田店は郊外型大型店舗、横浜店は百貨店テナント
+営業時間は通常店舗は7:00～20:00。百貨店テナントは10:00～21:00
+ピークは昼のランチ需要が最も高いが、都心型は朝食需要も高い、郊外店舗は夕食需要が高い
+都心型は平日の売上が高い。土日は休業。客層はサラリーマン中心。朝は男性が多く、昼は若い女性が多い
+郊外型は木曜休業。週末の売り上げが多く、家族向けに複数アイテムをまとめ買いする傾向がある
+百貨店テナントは休業なし。金曜から土曜の売上が多く、客層は高齢層
+＃＃＃アイテム特性情報
+
+アイテムは「ツナマヨ」は万人受け、「こんぶ」「高菜」は高い年齢層に人気、「いくら」は女性に人気、「チャーシュー」は20～40代の男性に人気
+＃＃＃特別情報
+
+閉店1時間前は売り残しをしたくないためセールを実施。全アイテム100円引きで購入できる。このため、この時間のみ客数が増える
+町田店の近くには幼稚園があり毎週水曜日は幼稚園のお迎え帰りのため、11:00～12:00の間のみ若者女性と子供の来客数が倍増する。
+このデータは、おにぎりを販売する3つの店舗のPOSデータです。町田店の時間あたりの来客数の傾向を線形回帰分析で分析するためにPythonスクリプトをscikit-learnで作成してください

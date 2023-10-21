@@ -1,0 +1,53 @@
+
+
+次条件を考慮して、仮想的なの売り上げデータを作成してください。ただし、コードが長くなりすぎないように工夫してください。
+
+＃＃＃情報
+
+期間は2022年9月1日から2023年8月31日まで
+データの項目は「トランザクションID、レシートID、ユーザーID、日時、曜日、業態、性別、年齢、商品名、単価、購入個数、小計、支払方法、 janコード」としてください。
+年齢は「子供（1-20歳）」、「若者（21-40歳）」、「中高年（41-60歳）」、「高齢者（61歳以上）」に分類してください。
+支払方法は「現金」、「クレジット」、「デビット」のいずれかにします。
+曜日は英語を使ってください
+性別は「男性」「女性」「その他」にしてください
+商品名：商品名はランダムに1000種類作成してください
+営業時間は7:00～22:00にしてください
+業態はスーパーマーケット、コンビニ、ドラッグストア、ディスカウントストア、ホームセンターにしてください
+作成したデータはExcel形式でダウンロード可能な状態で出力してください。
+購入個数：商品名に紐づいて複数購入される場合も想定
+同じ顧客による購入をグループ化するために1人の顧客につき1つの取引IDを割り当てます。顧客が複数回来店する場合は、新たな取引IDを割り当ててください。
+janコードは商品名に一意になるように割り当ててください
+ユーザーIDは一意のユーザーIDを割り当てる。異なるアイテムを組み合わせて合計で1～3個を購入する。稀に同じアイテムを複数購入する人もいる。
+レシートIDは一意のレシートIDを割り当てる。
+昼のコンビニは需要が最も高いが、総合的にはスーパーマーケットが最も需要高い
+朝は男性が多く、昼は若い女性が多い
+
+出力形式はcsvにしてください
+
+Create hypothetical sales data considering the following conditions. However, please ensure the code is short enough（The output format should be .csv）.
+
+### Information
+
+The period is from September 1, 2022, to August 31, 2023
+Data items should be "transaction ID, receipt ID, user ID, date/time, day of the week, business type, gender, age, product name, unit price, quantity purchased, subtotal, payment method, Jan code.
+Age should be categorized as "children (1-20 years old)," "youth (21-40 years old)," "middle-aged (41-60 years old)," and "elderly (61 years old or older).
+Payment methods should be "Cash," "Credit," or "Debit".
+Use English for the day of the week.
+Gender should be "Male," "Female," or "Other
+Product name: Please create 1000 random product names
+Business hours should be from 7:00 to 22:00
+Business types should be supermarkets, convenience stores, drugstores, discount stores, or home centers.
+Please output the created data in downloadable Excel format.
+Number of items purchased: Assume multiple purchases tied to a product name.
+Assign one transaction ID per customer to group purchases by the same customer. If a customer visits the store multiple times, assign a new transaction ID.
+jan code should be assigned to be unique to the product name
+User IDs should be assigned unique user IDs. Combine different items to purchase a total of 1-3 items. Rarely do people purchase more than one of the same item.
+Receipt ID assigns a unique receipt ID.
+Convenience stores have the highest demand at lunchtime, but supermarkets have the highest overall demand
+Most men in the morning and most young women in the afternoon
+
+
+### Requirements for output information
+The code execution environment is Google Colab.
+The output .csv file should be output and saved in the same directory where the code is located.
+
