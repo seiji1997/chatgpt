@@ -189,7 +189,13 @@ Remember to configure Cloud Function triggers and permissions appropriately for 
 ---------------------------
 
 
-## One-hot encoding supports to be like this 
+## One-hot encoding should be as follows
+Implemented in AWS Glue (PySpark) code
+```python
+titanic_data_cat_encoded = titanic_data_cat
+```
+instead of a process like
+
 To perform One-Hot Encoding on character columns (X_cat) in Python code on AWS Glue, you can use PySpark, the library on which AWS Glue is built. Here's an example of how to perform One-Hot Encoding on character columns in a Glue ETL job:
 
 ```python
