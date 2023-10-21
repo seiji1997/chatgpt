@@ -196,6 +196,11 @@ titanic_data_cat_encoded = titanic_data_cat
 ```
 instead of a process like
 
+### prompt
+```
+character columns (X_cat) to numeric with One-Hot-Encoding in python code on AWS glue
+```
+
 To perform One-Hot Encoding on character columns (X_cat) in Python code on AWS Glue, you can use PySpark, the library on which AWS Glue is built. Here's an example of how to perform One-Hot Encoding on character columns in a Glue ETL job:
 
 ```python
