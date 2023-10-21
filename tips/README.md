@@ -10,8 +10,8 @@ Navigate to the Directory: Use the cd command to navigate to the directory where
 
 ```bash
 cd ~/Desktop
-Replace ~/Desktop with the path to the directory you want to clean.
 ```
+Replace ~/Desktop with the path to the directory you want to clean.
 
 Delete .DS_Store Files: To delete all .DS_Store files in the current directory and its subdirectories, you can use the find command along with the rm command. Run the following command:
 
