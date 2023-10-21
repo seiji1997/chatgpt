@@ -1,7 +1,7 @@
 # chatgpt
 playing with ChatGPT
 
-prompt
+## prompt
 ```
 Please create python code to implement the following process on AWS Glue (pyspark) and in Google Colab.
 
@@ -36,6 +36,8 @@ The names of S3 and crawler are yet to be determined, so please make it clear so
 ## output
 Implementing the process you described, which includes data processing in Google Colab, AWS Glue, and GCP (BigQuery), as well as using Lambda functions, Cloud Functions, and BigQueryML, requires several steps and environments. Below are the high-level steps and Python code examples for each part:
 
+## Google Colab
+
 ```python
 # Step 1: Acquire Titanic data from Seaborn and store it in a DataFrame
 import seaborn as sns
@@ -50,7 +52,7 @@ titanic.to_csv('/content/drive/My Drive/titanic.csv', index=False)
 
 After running the code in Google Colab, you should have the Titanic dataset stored as 'titanic.csv' in your Google Drive.
 
-AWS Glue (PySpark)
+## AWS Glue (PySpark)
 You can create an AWS Glue Job to perform the first part of data processing. Below is a sample Python script for AWS Glue:
 
 
@@ -113,8 +115,8 @@ job.commit()
 
 This script assumes you have already done the One-Hot-Encoding for categorical columns, which is typically a custom transformation. Please replace 'input_path' and 'output_path' with your actual S3 paths and customize the One-Hot-Encoding part as needed.
 
-AWS Glue (PySpark) - Lambda Function
-You can create a Lambda function to migrate the preprocessed data from the second S3 to GCP's Cloud Storage. This function can be triggered by the completion of the AWS Glue Crawler.
+## AWS Glue (PySpark) - Lambda Function
+You can create a Lambda function to migrate the preprocessed data from the second S3 to GCP's Cloud Storage. The completion of the AWS Glue Crawler can trigger this function.
 
 Here's a high-level example of how the Lambda function might look in Python:
 
@@ -145,7 +147,7 @@ def lambda_handler(event, context):
 
 When triggered, this Lambda function copies the data from AWS S3 to GCP Cloud Storage.
 
-GCP (BigQuery)
+## GCP (BigQuery)
 For the GCP part, you can create a Cloud Function to migrate data from Cloud Storage to BigQuery. Additionally, you can use BigQuery ML for data analysis tasks. Here's a high-level example of a Cloud Function to migrate data:
 
 
