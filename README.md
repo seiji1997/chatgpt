@@ -2,9 +2,7 @@
 playing with ChatGPT
 
 ## Prompt engineering
-Prompt engineering designs and creates prompts or queries in natural language processing (NLP) and conversational AI systems.<br>
-It involves crafting well-structured and meaningful questions or instructions to elicit desired responses from AI models.<br> 
-Prompt engineering is commonly used in various NLP applications, including chatbots, search engines, and language models like GPT-3.<br>
+Prompt engineering designs and creates prompts or queries in natural language processing (NLP) and conversational AI systems. It involves crafting well-structured and meaningful questions or instructions to elicit desired responses from AI models. Prompt engineering is commonly used in various NLP applications, including chatbots, search engines, and language models like GPT-3.<br>
 
 ### Here are critical aspects of prompt engineering:
 
