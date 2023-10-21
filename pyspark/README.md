@@ -373,7 +373,8 @@ def lambda_handler(event, context):
     for retry in range(max_retries):
         try:
             # List .csv files in the specified Google Drive folder
-            results = drive_service.files().list(q=f"'{folder_id}' in parents and mimeType='text/csv'").execute()
+            query = f"'{folder_id}' in parents and mimeType='text/csv'"
+            results = drive_service.files().list(q=query).execute()
             files = results.get('files', [])
 
             # Create a temporary directory to store downloaded files
