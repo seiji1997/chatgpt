@@ -213,3 +213,146 @@ End Sub
   )
 )
 ```
+
+```python
+=LET(
+  NORM, LAMBDA(x, IF(ISNUMBER(x), x, UPPER(TRIM(SUBSTITUTE(x,CHAR(160)," "))))),
+
+  fy,   NORM('BIDLデータ'!A2),
+  plant,NORM('BIDLデータ'!B2),
+  prod, NORM('BIDLデータ'!C2),
+  biz,  NORM('BIDLデータ'!D2),
+
+  idx, IFERROR(
+        FILTER(ROW('投入データ'!A:A),
+          (NORM('投入データ'!A:A)=fy)*
+          (NORM('投入データ'!F:F)=plant)*
+          (NORM('投入データ'!G:G)=prod)*
+          (NORM('投入データ'!I:I)=biz)
+        ),
+      ""),
+
+  IF(idx="","NO MATCH",
+    LET(
+      s1,'BIDLデータ'!I2, s2,'BIDLデータ'!K2, s3,'BIDLデータ'!L2,
+      s4,'BIDLデータ'!N2, s5,'BIDLデータ'!O2, s6,'BIDLデータ'!Q2, s7,'BIDLデータ'!R2,
+
+      t1, INDEX('投入データ'!J:J, idx),
+      t2, INDEX('投入データ'!K:K, idx),
+      t3, INDEX('投入データ'!L:L, idx),
+      t4, INDEX('投入データ'!M:M, idx),
+      t5, INDEX('投入データ'!N:N, idx),
+      t6, INDEX('投入データ'!O:O, idx),
+      t7, INDEX('投入データ'!P:P, idx),
+
+      exactRows,  (t1=s1)*(t2=s2)*(t3=s3)*(t4=s4)*(t5=s5)*(t6=s6)*(t7=s7),
+      roundRows,  (ROUND(t1,5)=ROUND(s1,5))*(ROUND(t2,5)=ROUND(s2,5))*
+                  (ROUND(t3,5)=ROUND(s3,5))*(ROUND(t4,5)=ROUND(s4,5))*
+                  (ROUND(t5,5)=ROUND(s5,5))*(ROUND(t6,5)=ROUND(s6,5))*
+                  (ROUND(t7,5)=ROUND(s7,5)),
+
+      IF(SUM(--exactRows)>0, "OK",
+         IF(SUM(--roundRows)>0, "OK≈(rounded)", "NG"))
+    )
+  )
+)
+
+```
+
+```python
+=IF($A2<>"OK≈(rounded)","",
+  LET(
+    r,$C2,
+    s1,'BIDLデータ'!I2, s2,'BIDLデータ'!K2, s3,'BIDLデータ'!L2,
+    s4,'BIDLデータ'!N2, s5,'BIDLデータ'!O2, s6,'BIDLデータ'!Q2, s7,'BIDLデータ'!R2,
+    t1,INDEX('投入データ'!J:J,r),
+    t2,INDEX('投入データ'!K:K,r),
+    t3,INDEX('投入データ'!L:L,r),
+    t4,INDEX('投入データ'!M:M,r),
+    t5,INDEX('投入データ'!N:N,r),
+    t6,INDEX('投入データ'!O:O,r),
+    t7,INDEX('投入データ'!P:P,r),
+    TEXTJOIN(", ",TRUE,
+      IF(s1=t1,"",IF(ROUND(s1,5)=ROUND(t1,5),"売上数量","")),
+      IF(s2=t2,"",IF(ROUND(s2,5)=ROUND(t2,5),"売上高","")),
+      IF(s3=t3,"",IF(ROUND(s3,5)=ROUND(t3,5),"変動費","")),
+      IF(s4=t4,"",IF(ROUND(s4,5)=ROUND(t4,5),"限界利益","")),
+      IF(s5=t5,"",IF(ROUND(s5,5)=ROUND(t5,5),"固定費","")),
+      IF(s6=t6,"",IF(ROUND(s6,5)=ROUND(t6,5),"荒利益","")),
+      IF(s7=t7,"",IF(ROUND(s7,5)=ROUND(t7,5),"製造コスト",""))
+    )
+  )
+)
+
+```
+
+```python
+=LET(
+  NORM, LAMBDA(x, IF(ISNUMBER(x), x, UPPER(TRIM(SUBSTITUTE(x,CHAR(160)," "))))),
+
+  fy,   NORM('BIDLデータ'!A2),
+  plant,NORM('BIDLデータ'!B2),
+  prod, NORM('BIDLデータ'!C2),
+  biz,  NORM('BIDLデータ'!D2),
+
+  idx, IFERROR(
+        FILTER(ROW('投入データ'!A:A),
+          (NORM('投入データ'!A:A)=fy)*
+          (NORM('投入データ'!F:F)=plant)*
+          (NORM('投入データ'!G:G)=prod)*
+          (NORM('投入データ'!I:I)=biz)
+        ),
+      ""),
+
+  IF(idx="","",
+    LET(
+      s1,'BIDLデータ'!I2, s2,'BIDLデータ'!K2, s3,'BIDLデータ'!L2,
+      s4,'BIDLデータ'!N2, s5,'BIDLデータ'!O2, s6,'BIDLデータ'!Q2, s7,'BIDLデータ'!R2,
+
+      t1, INDEX('投入データ'!J:J, idx),
+      t2, INDEX('投入データ'!K:K, idx),
+      t3, INDEX('投入データ'!L:L, idx),
+      t4, INDEX('投入データ'!M:M, idx),
+      t5, INDEX('投入データ'!N:N, idx),
+      t6, INDEX('投入データ'!O:O, idx),
+      t7, INDEX('投入データ'!P:P, idx),
+
+      exactRows,  (t1=s1)*(t2=s2)*(t3=s3)*(t4=s4)*(t5=s5)*(t6=s6)*(t7=s7),
+      roundRows,  (ROUND(t1,5)=ROUND(s1,5))*(ROUND(t2,5)=ROUND(s2,5))*
+                  (ROUND(t3,5)=ROUND(s3,5))*(ROUND(t4,5)=ROUND(s4,5))*
+                  (ROUND(t5,5)=ROUND(s5,5))*(ROUND(t6,5)=ROUND(s6,5))*
+                  (ROUND(t7,5)=ROUND(s7,5)),
+
+      pos, IF(SUM(--exactRows)>0,
+                XMATCH(1, exactRows, 0),
+             IF(SUM(--roundRows)>0,
+                XMATCH(1, roundRows, 0),
+                "")),
+
+      IF(pos="","", INDEX(idx, pos))
+    )
+  )
+)
+
+```
+
+```python
+=LET(
+  NORM, LAMBDA(x, IF(ISNUMBER(x), x, UPPER(TRIM(SUBSTITUTE(x,CHAR(160)," "))))),
+  fy,   NORM('BIDLデータ'!A2),
+  plant,NORM('BIDLデータ'!B2),
+  prod, NORM('BIDLデータ'!C2),
+  biz,  NORM('BIDLデータ'!D2),
+  idx, IFERROR(
+        FILTER(ROW('投入データ'!A:A),
+          (NORM('投入データ'!A:A)=fy)*
+          (NORM('投入データ'!F:F)=plant)*
+          (NORM('投入データ'!G:G)=prod)*
+          (NORM('投入データ'!I:I)=biz)
+        ),
+      ""),
+  IF(idx="","", TEXTJOIN(", ", TRUE, idx))
+)
+
+```
+
