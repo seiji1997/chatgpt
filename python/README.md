@@ -125,4 +125,45 @@ Decorators: Functions that modify the behavior of other functions.<br>
 This is just an overview of Python's grammar and some practical methods and concepts. Python's extensive standard library offers many more features and functionalities for various tasks. To use these features effectively, you should explore Python's official documentation and practice writing code.<br>
 
 
+Sub UnmergeAndFillDown_PreserveBlanks()
+    Dim rng As Range, c As Range, m As Range
+    Dim v As Variant
+    On Error GoTo Done
+
+    If TypeName(Selection) <> "Range" Then
+        MsgBox "処理したい列（または範囲）を選択してから実行してください。"
+        Exit Sub
+    End If
+
+    Application.ScreenUpdating = False
+    Application.Calculation = xlCalculationManual
+
+    Set rng = Selection
+
+    For Each c In rng.Cells
+        If c.MergeCells Then
+            Set m = c.MergeArea
+            ' 同じ結合ブロックを重複処理しない
+            If c.Address = m.Cells(1, 1).Address Then
+                v = m.Cells(1, 1).Value
+                m.UnMerge
+                If Len(v) > 0 Then
+                    ' 値がある結合ブロックのみ埋める
+                    m.Value = v
+                Else
+                    ' 値が空の結合は空白のまま
+                    ' 何もしない
+                End If
+                ' 任意：中央揃えをかけ直したい場合は次行のコメントを外す
+                ' m.HorizontalAlignment = xlCenter
+            End If
+        End If
+    Next c
+
+Done:
+    Application.Calculation = xlCalculationAutomatic
+    Application.ScreenUpdating = True
+End Sub
+
+
 
