@@ -167,3 +167,49 @@ End Sub
 
 ```
 
+```python
+=LET(
+  fy,'BIDLデータ'!A2, plant,'BIDLデータ'!B2, product,'BIDLデータ'!C2, biz,'BIDLデータ'!D2,
+  mr, XMATCH(1, ('投入データ'!A:A=fy)*('投入データ'!F:F=plant)*('投入データ'!G:G=product)*('投入データ'!I:I=biz), 0),
+  IF(ISNA(mr),"NO MATCH",
+    LET(
+      s1,'BIDLデータ'!I2, t1, INDEX('投入データ'!J:J, mr),
+      s2,'BIDLデータ'!K2, t2, INDEX('投入データ'!K:K, mr),
+      s3,'BIDLデータ'!L2, t3, INDEX('投入データ'!L:L, mr),
+      s4,'BIDLデータ'!N2, t4, INDEX('投入データ'!M:M, mr),
+      s5,'BIDLデータ'!O2, t5, INDEX('投入データ'!N:N, mr),
+      s6,'BIDLデータ'!Q2, t6, INDEX('投入データ'!O:O, mr),
+      s7,'BIDLデータ'!R2, t7, INDEX('投入データ'!P:P, mr),
+      exact, AND(s1=t1,s2=t2,s3=t3,s4=t4,s5=t5,s6=t6,s7=t7),
+      rounded, AND(
+        ROUND(s1,5)=ROUND(t1,5),
+        ROUND(s2,5)=ROUND(t2,5),
+        ROUND(s3,5)=ROUND(t3,5),
+        ROUND(s4,5)=ROUND(t4,5),
+        ROUND(s5,5)=ROUND(t5,5),
+        ROUND(s6,5)=ROUND(t6,5),
+        ROUND(s7,5)=ROUND(t7,5)
+      ),
+      IF(exact,"OK",IF(rounded,"OK≈(rounded)","NG"))
+    )
+  )
+)
+```
+
+```python
+=LET(
+  fy,'BIDLデータ'!A2, plant,'BIDLデータ'!B2, product,'BIDLデータ'!C2, biz,'BIDLデータ'!D2,
+  mr, XMATCH(1, ('投入データ'!A:A=fy)*('投入データ'!F:F=plant)*('投入データ'!G:G=product)*('投入データ'!I:I=biz), 0),
+  IF(ISNA(mr),"",
+    LET(
+      names, {"売上数量","売上高","変動費","利益","固定費","荒利","コスト"},
+      s, { 'BIDLデータ'!I2,'BIDLデータ'!K2,'BIDLデータ'!L2,'BIDLデータ'!N2,'BIDLデータ'!O2,'BIDLデータ'!Q2,'BIDLデータ'!R2 },
+      t, { INDEX('投入データ'!J:J,mr), INDEX('投入データ'!K:K,mr), INDEX('投入データ'!L:L,mr), INDEX('投入データ'!M:M,mr), INDEX('投入データ'!N:N,mr), INDEX('投入データ'!O:O,mr), INDEX('投入データ'!P:P,mr) },
+      exactFlags, s=t,
+      roundFlags, ROUND(s,5)=ROUND(t,5),
+      need, (NOT(exactFlags))*roundFlags,
+      TEXTJOIN(", ", TRUE, IF(need, names, ""))
+    )
+  )
+)
+```
