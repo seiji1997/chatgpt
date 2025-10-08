@@ -124,7 +124,7 @@ Generators: Special functions used to create iterators, often using the yield ke
 Decorators: Functions that modify the behavior of other functions.<br>
 This is just an overview of Python's grammar and some practical methods and concepts. Python's extensive standard library offers many more features and functionalities for various tasks. To use these features effectively, you should explore Python's official documentation and practice writing code.<br>
 
-
+```python
 Sub UnmergeAndFillDown_PreserveBlanks()
     Dim rng As Range, c As Range, m As Range
     Dim v As Variant
@@ -165,5 +165,5 @@ Done:
     Application.ScreenUpdating = True
 End Sub
 
-
+```
 
